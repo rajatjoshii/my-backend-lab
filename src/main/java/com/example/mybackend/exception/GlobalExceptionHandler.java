@@ -2,7 +2,6 @@ package com.example.mybackend.exception;
 
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -15,23 +14,23 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    //this will catch errors where we are trying to update those values that dont exist via put
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(NoSuchElementException.class)
-    public ApiErrorResponse handleNoSuchApiErrorResponse(NoSuchElementException ex) {
-        Map<String, String> errorDetails = Map.of("message", ex.getMessage()+ "better luck next time");
+    // handle not found user
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(UserNotFoundException.class)
+    public ApiErrorResponse handleUserNotFound(UserNotFoundException ex) {
+        Map<String, String> errorDetails = Map.of("message", ex.getMessage());
 
         return new ApiErrorResponse(
             LocalDateTime.now(),
-            HttpStatus.BAD_REQUEST.value(),
-            "Bad Request",
+            HttpStatus.NOT_FOUND.value(),
+            "Not Found",
             errorDetails
         );
     }
 
     //handle invalid json
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(org.springframework.http.converter.HttpMessageNotReadableException.class)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
     public ApiErrorResponse handleInvalidJson(HttpMessageNotReadableException ex) {
         return new ApiErrorResponse(
             LocalDateTime.now(),
