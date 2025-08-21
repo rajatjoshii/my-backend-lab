@@ -8,7 +8,7 @@ import com.example.mybackend.repository.UserRepository;
 import com.example.mybackend.dto.CreateUserRequestDTO;
 import com.example.mybackend.dto.UserResponseDTO;
 import com.example.mybackend.model.User;
-import java.util.*;
+import com.example.mybackend.exception.UserNotFoundException;
 
 @Service
 public class UserService {
@@ -32,7 +32,7 @@ public class UserService {
 
     public UserResponseDTO getUserByID(int id){
         User user = userRepository.findById(id)
-        .orElseThrow(()-> new NoSuchElementException("User Not found with id" + id));
+        .orElseThrow(() -> new UserNotFoundException("User not found with id" + id));
         
         return new UserResponseDTO(user.getId(), user.getName());
     }
@@ -47,7 +47,7 @@ public class UserService {
 
     public UserResponseDTO updateUser(int id, CreateUserRequestDTO userUpdate){
         User existingUser =  userRepository.findById(id)
-        .orElseThrow(()-> new NoSuchElementException("User not found with id" + id));
+        .orElseThrow(() -> new UserNotFoundException("User not found with id" + id));
 
         existingUser.setName(userUpdate.getName());
         User saved = userRepository.save(existingUser);
@@ -56,7 +56,7 @@ public class UserService {
 
     public void deleteUser(int id){
         if(!userRepository.existsById(id)){
-            throw new NoSuchElementException("User not found with id" + id);
+            throw new UserNotFoundException("User not found with id" + id);
         }
         userRepository.deleteById(id);
     }
