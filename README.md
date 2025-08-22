@@ -71,11 +71,15 @@ docker run -p 8080:8080 my-backend-app
 - Your local port 8080 → container’s port 8080
 - http://localhost:8080/swagger-ui/index.html -> swagger
 - p 8080:8080 -> Maps a host port (left side) to a container port (right side)
-- 
 
-- To check container id and ports run in a separate terminal-> 
+- To check container id and ports run in a separate terminal
 ```bash
 docker ps 
 ```
 
+# Docker-compose
+## Run the docker using the configurations defined in the yml file
 
+```bash
+docker-compose up
+```
