@@ -51,3 +51,31 @@ To customize settings such as the server port or database connection, edit that 
 ```
 
 For additional options, consult the [Spring Boot documentation](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/).
+
+
+# Docker 
+
+## Build a docker file
+
+```bash
+docker build -t my-backend-app .
+```
+
+## Run the docker container
+
+```bash
+docker run -p 8080:8080 my-backend-app
+```
+
+- Starts a container from your image my-backend-app
+- Your local port 8080 → container’s port 8080
+- http://localhost:8080/swagger-ui/index.html -> swagger
+- p 8080:8080 -> Maps a host port (left side) to a container port (right side)
+- 
+
+- To check container id and ports run in a separate terminal-> 
+```bash
+docker ps 
+```
+
+
